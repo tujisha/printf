@@ -1,34 +1,41 @@
 #include "main.h"
 /**
-* _printf - Receives the main string and all the necessary parameters to
-* print a formated string
-* @format: A string containing all the desired characters
-* Return: A total count of the characters printed
-*/
+* _printf - main function to print in console
+* @format: array to print and check type
+* Return: count of character printed
+**/
 int _printf(const char *format, ...)
 {
-int printed_chars;
-conver_t f_list[] = { 
-                 {"c", print_char}, 
-                 {"s", print_string}, 
-                 {"%", print_percent}, 
-                 {"d", print_integer}, 
-                 {"i", print_integer}, 
-                 {"b", print_binary}, 
-                 {"r", print_reversed}, 
-                 {"R", rot13}, 
-                 {"u", unsigned_integer}, 
-                 {"o", print_octal}, 
-                 {"x", print_hex}, 
-                 {"X", print_heX}, 
-                 {NULL, NULL} 
-         };
-va_list arg_list;
-if (format == NULL)
+int count = -1;
+if (format != NULL)
+{
+int i;
+va_list ar_list;
+int (*o)(va_list);
+va_start(ar_list, format);
+if (format[0] == '%' && format[1] == '\0')
 return (-1);
-va_start(arg_list, format);
-/*Calling parser function*/
-printed_chars = parser(format, f_list, arg_list);
-va_end(arg_list);
-return (printed_chars);
+count = 0;
+for (i = 0; format[i] != '\0'; i++)
+{
+if (format[i] == '%')
+{
+if (format[i + 1] == '%')
+{
+count += _putchar(format[i]);
+i++;
+}
+else if (format[i + 1] != '\0')
+{
+o = get_func(format[i + 1]);
+count += (o ? o(ar_list) : _putchar(format[i]) + _putchar(format[i + 1]));
+i++;
+}
+}
+else
+count += _putchar(format[i]);
+}
+va_end(ar_list);
+}
+return (count);
 }
