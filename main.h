@@ -1,29 +1,42 @@
-#ifndef _HOLBERTON_
-#define _HOLBERTON_
-#include <unistd.h>
-#include <stdarg.h>
+#ifndef HOLBERTON_H
+#define HOLBERTON_H
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #include <limits.h>
+#include <unistd.h>
 /**
-* struct op - flag / function object
-* @c: flag
-* @f: function
+* struct format - match the conversion specifiers for printf
+* @id: type char pointer of the specifier i.e (l, h) for (d, i, u, o, x, X)
+* @f: type pointer to function for the conversion specifier
+*
 */
-typedef struct op
+typedef struct format
 {
-char *c;
-int (*f)(va_list);
-} op_t;
-int _printf(const char *format, ...);
+char *id;
+int (*f)();
+} convert_match;
+int printf_pointer(va_list val);
+int printf_hex_aux(unsigned long int num);
+int printf_HEX_aux(unsigned int num);
+int printf_exclusive_string(va_list val);
+int printf_HEX(va_list val);
+int printf_hex(va_list val);
+int printf_oct(va_list val);
+int printf_unsigned(va_list args);
+int printf_bin(va_list val);
+int printf_srev(va_list args);
+int printf_rot13(va_list args);
+int printf_int(va_list args);
+int printf_dec(va_list args);
+int _strlen(char *s);
+int *_strcpy(char *dest, char *src);
+int _strlenc(const char *s);
+int rev_string(char *s);
+int _strlenc(const char *s);
+int printf_37(void);
+int printf_char(va_list val);
+int printf_string(va_list val);
 int _putchar(char c);
-int print_c(va_list ar_list);
-int (*get_func(char s))(va_list ar_list);
-int print_s(va_list ar_list);
-int print_d(va_list ar_list);
-int print_i(va_list ar_numlist);
-int print_b(va_list binary_list);
-int print_u(va_list ar_list);
-int print_o(va_list ar_list);
-int print_x(va_list ar_list);
-int print_X(va_list ar_list);
+int _printf(const char *format, ...);
 #endif
